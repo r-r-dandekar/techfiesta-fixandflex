@@ -27,3 +27,15 @@ Then install requirements:
 ```
 pip install -r requirements.txt
 ```
+
+## TO-DO
+
+### Secondary Research
+ - Get info about platforms like paisa-bazaar
+
+
+## Tech Stack
+
+Back-End  : Flask
+Front-End : React
+Database  : MongoDB
