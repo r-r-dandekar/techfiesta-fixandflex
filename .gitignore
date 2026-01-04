@@ -1,0 +1,56 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.venv/
+venv/
+ENV/
+env/
+bin/
+lib/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.installed.cfg
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Flask/Secret Key and Environment Variables
+.env
+.flaskenv
+instance/
+.pytest_cache/
+
+
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Production Build
+build/
+dist/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+/coverage
+.cache/
+
+# Local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
