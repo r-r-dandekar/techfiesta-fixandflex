@@ -18,6 +18,7 @@ Activate your virtual environment (don't skip this step!)
 For Windows cmd:
 ```
 ./venv/Scripts/activate
+```
 For Linux:
 ```
 source venv/bin/activate
@@ -33,7 +34,10 @@ pip install -r requirements.txt
 ### Secondary Research
  - Get info about platforms like paisa-bazaar
  - Integration of MongoDB
- - 
+ - Finish the basic class structure of rules and users
+ - Implement some basic rules
+ - Finalize structure and flow of recommendation engine
+ - _The entire front-end_
 
 
 ## Tech Stack
