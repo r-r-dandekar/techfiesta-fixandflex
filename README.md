@@ -29,6 +29,11 @@ Then install requirements:
 pip install -r requirements.txt
 ```
 
+You will also need to store a valid Gemini API key in a file called .env in the following format:
+```
+GEMINI_API_KEY='<your-key-here>'
+```
+
 ## TO-DO
 
 ### Secondary Research
