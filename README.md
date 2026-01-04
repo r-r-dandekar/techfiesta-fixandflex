@@ -33,11 +33,15 @@ pip install -r requirements.txt
 
 ### Secondary Research
  - Get info about platforms like paisa-bazaar
+
+### High-Level Design
+ - Finalize structure and flow of recommendation engine
+ - _The entire front-end_
+
+### Implementation
  - Integration of MongoDB
  - Finish the basic class structure of rules and users
  - Implement some basic rules
- - Finalize structure and flow of recommendation engine
- - _The entire front-end_
 
 
 ## Tech Stack
