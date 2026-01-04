@@ -3,6 +3,8 @@
 
 ## Installation
 
+Currently, we're using Python 3.10.12. We might change it later depending on the needs of our libraries
+
 Please create a virtual environment while installing!
 ```
 python -m venv venv
