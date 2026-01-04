@@ -32,6 +32,8 @@ pip install -r requirements.txt
 
 ### Secondary Research
  - Get info about platforms like paisa-bazaar
+ - Integration of MongoDB
+ - 
 
 
 ## Tech Stack

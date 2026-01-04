@@ -1,4 +1,4 @@
-from core.rules import Rule
+from core.rules.rules import Rule
 
 class SoftRule(Rule):
 
@@ -9,5 +9,4 @@ class SoftRule(Rule):
         pass
         
     def __init__(self, ruleID: str, ruleType: str):
-        self.ruleID = ruleID
-        self.ruleType = ruleType
+        super().__init__(ruleID, ruleType)

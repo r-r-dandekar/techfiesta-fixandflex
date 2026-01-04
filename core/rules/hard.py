@@ -1,6 +1,10 @@
-from core.rules import Rule
+from core.rules.rule import Rule
+from core.user import User
 
-class SoftRule(Rule):
+class HardRule(Rule):
 
-    def satisifed() -> bool:
+    def satisifed(user: User) -> bool:
         pass
+
+    def __init__(self, ruleID: str, ruleType: str):
+        super().__init__(ruleID, ruleType)
