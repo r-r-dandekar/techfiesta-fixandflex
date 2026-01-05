@@ -1,6 +1,6 @@
 from core.base_rules import HardRule
 from core.user import User
-from utils.logs import log_error
+from utils.logs import log_error, log_info
 
 # Fixed Obligation to Income Ratio
 # a. k. a. Debt Burden
@@ -8,6 +8,9 @@ class FOIR(HardRule):
 
     # Expressed as a percentage e.g. 0.5
     max_foir : float
+    
+    # EMI of the loan that is to be checked for eligibility
+    emi : float
 
     def satisfied(self, user: User) -> bool:
         # Calculate FOIR based on user info
@@ -24,29 +27,50 @@ class FOIR(HardRule):
         # Loans
         loans = existing_obligations.get("loans")
         for loan in loans:
-            monthly_emi = loan.get("monthly_emi")
-            monthly_fixed_obligations += monthly_emi
+            monthly_fixed_obligations = loan.get("monthly_emi", 0)
             
         # Credit Card monthly minimums
-        creditCards = existing_obligations.get("creditCards")
-        for creditCard in creditCards:
-            monthly_min_payment = creditCards.get("monthly_min_payment")
-            monthly_fixed_obligations += monthly_min_payment
+        credit_cards = existing_obligations.get("credit_cards")
+        for credit_card in credit_cards:
+            monthly_fixed_obligations += credit_card.get("monthly_min_payment", 0)
 
-        # Credit Card monthly minimums
-        creditCards = existing_obligations.get("creditCards")
-        for creditCard in creditCards:
-            monthly_min_payment = creditCards.get("monthly_min_payment")
-            monthly_fixed_obligations += monthly_min_payment
+        # Other monthly expenses
+        other = existing_obligations.get("other")
+        for entry in other:
+            if entry.get("is_monthly", False):
+                monthly_fixed_obligations += entry.get("amount", 0)
 
+        monthly_fixed_obligations += self.emi
 
-        credit_score = user.info.get("creditProfile", {}).get("creditScore")
-        if credit_score:
-            return credit_score >= self.max_foir
-        else:
-            log_error("FOIR not found!")
+        log_info(f"Monthly Fixed Obligations: {monthly_fixed_obligations}")
+
+        # Next, calculate Gross Monthly Income
+        gross_monthly_income = 0
+
+        # If employed, get gross monthly salary
+        employment = user.info.get("employment")
+        if employment and employment.get("applicable"):
+            gross_monthly_income += employment.get("monthly_gross_salary", 0)
+            
+        # If business, get monthly profit
+        business_info = user.info.get("employment")
+        if business_info and business_info.get("applicable"):
+            gross_monthly_income += business_info.get("monthly_profit", 0) * business_info.get("shares_owned_fraction", 0)
+
+        if gross_monthly_income == 0:
+            log_error("No monthly income sources found!")
             return False
 
-    def __init__(self, ruleID: str, ruleType: str, max_foir: float):
+        log_info(f"Gross Monthly Income: {gross_monthly_income}")
+
+        # Finally, calculate FOIR
+        foir = monthly_fixed_obligations / gross_monthly_income
+        
+        log_info(f"FOIR: {foir}")
+
+        return foir <= self.max_foir
+
+    def __init__(self, ruleID: str, ruleType: str, max_foir: float, emi: float):
         super().__init__(ruleID, ruleType)
         self.max_foir = max_foir
+        self.emi = emi

@@ -21,6 +21,7 @@ be guaranteed to be present in the actual data.
         "city_tier": 1
     },
     "employment": {
+        "applicable": true,
         "type": "salaried",
         "employer_name": "Infosys Ltd",
         "employer_type": "MNC",
@@ -39,7 +40,8 @@ be guaranteed to be present in the actual data.
         "annual_turnover": null,
         "monthly_profit": null,
         "gst_registered": null,
-        "itr_filed_years": null
+        "itr_filed_years": null,
+        "shares_owned_fraction": null
     },
     "credit_profile": {
         "credit_score": 760,

@@ -21,6 +21,7 @@ class User:
         "city_tier": 1
     },
     "employment": {
+        "applicable": True,
         "type": "salaried",
         "employer_name": "Infosys Ltd",
         "employer_type": "MNC",
@@ -39,7 +40,8 @@ class User:
         "annual_turnover": None,
         "monthly_profit": None,
         "gst_registered": None,
-        "itr_filed_years": None
+        "itr_filed_years": None,
+        "shares_owned_fraction": None
     },
     "credit_profile": {
         "credit_score": 760,
