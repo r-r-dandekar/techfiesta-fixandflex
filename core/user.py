@@ -5,8 +5,8 @@ class User:
 
 
     # For testing, to set the user's info to the sample data (copied from documenation/sample_user_info.md)
-    def set_sample_info():
-        info = {
+    def set_sample_info(self):
+        self.info = {
             "applicationId": "APP_2024_001234",
             "timestamp": "2024-01-04T10:30:00Z",
             
@@ -36,21 +36,21 @@ class User:
             },
             
             "businessInfo": {
-                "applicable": false,
-                "businessType": null,
-                "businessName": null,
-                "yearsInBusiness": null,
-                "annualTurnover": null,
-                "monthlyProfit": null,
-                "gstRegistered": null,
-                "itrFiledYears": null
+                "applicable": False,
+                "businessType": None,
+                "businessName": None,
+                "yearsInBusiness": None,
+                "annualTurnover": None,
+                "monthlyProfit": None,
+                "gstRegistered": None,
+                "itrFiledYears": None
             },
             
             "creditProfile": {
                 "creditScore": 760,
                 "panNumber": "ABCDE1234F",
-                "hasDefaultHistory": false,
-                "bankruptcyHistory": false
+                "hasDefaultHistory": False,
+                "bankruptcyHistory": False
             },
             
             "existingObligations": {
@@ -61,7 +61,7 @@ class User:
                     "outstandingAmount": 250000,
                     "monthlyEMI": 12000,
                     "remainingTenureMonths": 24,
-                    "isRegular": true
+                    "isRegular": True
                 }
                 ],
                 "creditCards": [
@@ -80,19 +80,19 @@ class User:
                 "savingsBalance": 450000,
                 "fixedDeposits": 200000,
                 "investments": 300000,
-                "ownedProperty": false,
+                "ownedProperty": False,
                 "propertyValue": 0,
-                "ownedVehicles": true,
+                "ownedVehicles": True,
                 "vehicleValue": 600000
             },
             
             "bankingRelationship": {
-                "hasSalaryAccount": true,
+                "hasSalaryAccount": True,
                 "salaryBank": "HDFC",
                 "accountAgeMonths": 60,
                 "averageMonthlyBalance": 75000,
-                "existingCustomer": false,
-                "existingLoanWith": null
+                "existingCustomer": False,
+                "existingLoanWith": None
             },
             
             "loanRequest": {
@@ -113,9 +113,9 @@ class User:
                 "constructionStatus": "ready_to_move",
                 "builderName": "Kolte Patil",
                 "carpetAreaSqFt": 850,
-                "isFirstHome": true,
+                "isFirstHome": True,
                 "downPaymentAvailable": 800000,
-                "hasCoApplicant": true,
+                "hasCoApplicant": True,
                 "coApplicantRelation": "spouse",
                 "coApplicantIncome": 45000,
                 "coApplicantCreditScore": 720
@@ -132,15 +132,15 @@ class User:
                 "vehicleAge": 0,
                 "kmsDriven": 0,
                 "downPaymentAvailable": 300000,
-                "hasTradeIn": false,
+                "hasTradeIn": False,
                 "tradeInValue": 0
                 },
                 
                 "personalDetails": {
                 "purpose": "home_renovation",
                 "purposeDescription": "Kitchen and bathroom upgrade",
-                "isUrgent": false,
-                "hasCollateral": false
+                "isUrgent": False,
+                "hasCollateral": False
                 },
                 
                 "educationDetails": {
@@ -154,10 +154,10 @@ class User:
                 "courseDurationMonths": 24,
                 "totalCourseFees": 2500000,
                 "yearOfAdmission": 2024,
-                "hasAdmissionLetter": true,
-                "hasScholarship": false,
+                "hasAdmissionLetter": True,
+                "hasScholarship": False,
                 "scholarshipAmount": 0,
-                "coApplicantAvailable": true,
+                "coApplicantAvailable": True,
                 "coApplicantRelation": "father",
                 "coApplicantAge": 58,
                 "coApplicantIncome": 80000,
@@ -166,10 +166,10 @@ class User:
             },
             
             "lifeContext": {
-                "marriagePlannedMonths": null,
+                "marriagePlannedMonths": None,
                 "childrenPlannedMonths": 24,
-                "jobChangeLikely": false,
-                "relocationLikely": false,
+                "jobChangeLikely": False,
+                "relocationLikely": False,
                 "majorExpensesPlanned": [
                 {
                     "type": "vehicle_purchase",
@@ -189,11 +189,11 @@ class User:
             
             "metadata": {
                 "source": "web_application",
-                "referralCode": null,
+                "referralCode": None,
                 "utmSource": "google",
                 "utmMedium": "cpc",
                 "sessionDurationSeconds": 420,
                 "pagesVisited": 8,
-                "calculatorUsed": true
+                "calculatorUsed": True
             }
         }
