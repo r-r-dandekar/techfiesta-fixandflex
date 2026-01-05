@@ -2,75 +2,41 @@ from core.base_rules import HardRule
 from core.user import User
 from utils.logs import log_error, log_info
 
-# Fixed Obligation to Income Ratio
-# a. k. a. Debt Burden
-class FOIR(HardRule):
+class IncomeFloor(HardRule):
+    """
+    Minimum earnings to qualify for the specific product tier.
+    Logic: NetIncome >= Rule.MinIncome
+    Considers both Salaried Net Salary and Business Profits.
+    """
+    min_income: float
 
-    # Expressed as a percentage e.g. 0.5
-    max_foir : float
-    
-    # EMI of the loan that is to be checked for eligibility
-    emi : float
+    def __init__(self, ruleID: str, ruleType: str, min_income: float = 25000):
+        super().__init__(ruleID, ruleType)
+        self.min_income = min_income
 
     def satisfied(self, user: User) -> bool:
-        # Calculate FOIR based on user info
+        # Calculate Total Monthly Net Income based on the FOIR logic style
+        total_net_income = 0
 
-        # First, find out mothly fixed obligations based on loans,
-        # credit card monthly minimums, and rent
-        monthly_fixed_obligations = 0
-
-        existing_obligations = user.info.get("existing_obligations")
-        if not existing_obligations:
-            log_error("No data available about existing obligations!")
-            return False
-
-        # Loans
-        loans = existing_obligations.get("loans")
-        for loan in loans:
-            monthly_fixed_obligations = loan.get("monthly_emi", 0)
-            
-        # Credit Card monthly minimums
-        credit_cards = existing_obligations.get("credit_cards")
-        for credit_card in credit_cards:
-            monthly_fixed_obligations += credit_card.get("monthly_min_payment", 0)
-
-        # Other monthly expenses
-        other = existing_obligations.get("other")
-        for entry in other:
-            if entry.get("is_monthly", False):
-                monthly_fixed_obligations += entry.get("amount", 0)
-
-        monthly_fixed_obligations += self.emi
-
-        log_info(f"Monthly Fixed Obligations: {monthly_fixed_obligations}")
-
-        # Next, calculate Gross Monthly Income
-        gross_monthly_income = 0
-
-        # If employed, get gross monthly salary
+        # 1. Salaried Income
         employment = user.info.get("employment")
         if employment and employment.get("applicable"):
-            gross_monthly_income += employment.get("monthly_gross_salary", 0)
-            
-        # If business, get monthly profit
-        business_info = user.info.get("employment")
-        if business_info and business_info.get("applicable"):
-            gross_monthly_income += business_info.get("monthly_profit", 0) * business_info.get("shares_owned_fraction", 0)
+            # Using net salary for the 'Floor' check as per your requirement logic
+            total_net_income += employment.get("monthly_net_salary", 0)
+            # Including other income sources if present
+            total_net_income += employment.get("other_monthly_income", 0)
 
-        if gross_monthly_income == 0:
-            log_error("No monthly income sources found!")
+        # 2. Business Income
+        business_info = user.info.get("business_info")
+        if business_info and business_info.get("applicable"):
+            profit = business_info.get("monthly_profit", 0) or 0
+            fraction = business_info.get("shares_owned_fraction", 0) or 0
+            total_net_income += (profit * fraction)
+
+        if total_net_income == 0:
+            log_error("No income sources found for IncomeFloor check!")
             return False
 
-        log_info(f"Gross Monthly Income: {gross_monthly_income}")
-
-        # Finally, calculate FOIR
-        foir = monthly_fixed_obligations / gross_monthly_income
+        log_info(f"Total calculated Net Income: {total_net_income}")
         
-        log_info(f"FOIR: {foir}")
-
-        return foir <= self.max_foir
-
-    def __init__(self, ruleID: str, ruleType: str, max_foir: float, emi: float):
-        super().__init__(ruleID, ruleType)
-        self.max_foir = max_foir
-        self.emi = emi
+        return total_net_income >= self.min_income

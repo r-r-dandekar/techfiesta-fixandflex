@@ -32,7 +32,9 @@ pip install -r requirements.txt
 You will also need to store a valid Gemini API key in a file called .env in the following format:
 ```
 GEMINI_API_KEY='<your-key-here>'
+MONGODB_URI='....'
 ```
+Contact Harshad if you don't know what to put for MONGODB_URI
 
 ## TO-DO
 
