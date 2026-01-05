@@ -1,11 +1,19 @@
-from flask import Flask
+from flask import Flask, jsonify
+from flask_cors import CORS
+from utils.database import get_db
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
-    
+def home():
+    return jsonify({
+        'message': 'Loan Eligibility API',
+        'status': 'running'
+    })
 
 @app.route("/testing")
 def testing():
@@ -20,6 +28,31 @@ def testing():
     print(f"Rule 2 satisfied: {r2.satisfied(u)}")
 
     return "<p>Testing, be sure to check the terminal!</p>"
+
+@app.route('/health')
+def health():
+    """Check MongoDB connection"""
+    try:
+        db = get_db()
+        db.command('ping')
+        
+        collections = db.list_collection_names()
+        
+        return jsonify({
+            'status': 'healthy',
+            'database': 'connected',
+            'collections': collections,
+            'db_name': db.name
+        }), 200
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'database': 'disconnected',
+            'message': str(e)
+        }), 500
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000, host='0.0.0.0')
     
 
 @app.route("/test_foir")
