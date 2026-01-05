@@ -3,7 +3,6 @@ class User:
     # This is a dictionary containing the user's details in the format given at: documenation/sample_user_info.md
     info: dict
 
-
     # For testing, to set the user's info to the sample data (copied from documenation/sample_user_info.md)
     def set_sample_info(self):
         self.info = {
