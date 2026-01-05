@@ -1,3 +1,7 @@
+# For now, just print everything to the terminal
+    
 def log_error(s : str):
-    # For now, just print errors
     print(f"ERROR: {s}")
+
+def log_info(s : str):
+    print(f"INFO: {s}")
