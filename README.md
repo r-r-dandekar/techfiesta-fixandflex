@@ -38,6 +38,8 @@ Contact Harshad if you don't know what to put for MONGODB_URI
 
 ## TO-DO
 
+ - Implement some sort of rule checking
+
 ### Secondary Research
  - Get info about platforms like paisa-bazaar
 
