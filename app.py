@@ -82,13 +82,15 @@ def insert_test_scheme_data():
 
 @app.route("/get_all_scheme_data")
 def get_all_scheme_data():
-
     try:
-
-        loan_schemes = db_wrapper.fetch_all_loan_schemes()
+        load_loan_schemes()
         for loan_scheme in loan_schemes:
             for rule in loan_scheme.rule_set:
                 print(rule)
     except Exception as e:
         return f"Oops! Something went wrong! {str(e)}"
     return "<p>Testing, be sure to check the terminal!</p>"
+
+
+def load_loan_schemes():
+    loan_schemes = db_wrapper.fetch_all_loan_schemes()
