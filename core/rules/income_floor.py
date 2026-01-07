@@ -10,8 +10,8 @@ class IncomeFloor(HardRule):
     """
     min_income: float
 
-    def __init__(self, ruleID: str, ruleType: str, min_income: float = 25000):
-        super().__init__(ruleID, ruleType)
+    def __init__(self, rule_id: str, min_income: float = 25000):
+        super().__init__(rule_id, "income_floor")
         self.min_income = min_income
 
     def satisfied(self, user: User) -> bool:

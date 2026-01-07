@@ -1,23 +1,27 @@
-from core.rules import HardRule, SoftRule
+from core.base_rules import HardRule, SoftRule
 from core.user import User
+from pydantic import BaseModel
+from typing import List
 
-class RuleSet():
-    hard_rules = []
-    soft_rules = []
+class RuleSet(BaseModel):
+    # 1. Define fields with type hints. 
+    # Providing default empty lists [] makes it easier to initialize.
+    hard_rules: List[HardRule] = []
+    soft_rules: List[SoftRule] = []  # Changed to SoftRule type for accuracy
 
-    def __init__(hard_rules : list[HardRule], soft_rules : list[HardRule])
-        self.hard_rules = hard_rules
-        self.soft_rules = soft_rules
+    # 2. REMOVED __init__. Pydantic handles this automatically.
 
-    def hard_rules_satisfied(user : User) -> bool:
-        for rule in hard_rules:
-            if not rule.satisfied(user)
-                return false
-        return true
+    def hard_rules_satisfied(self, user: User) -> bool:
+        # Note: Use 'self.hard_rules' to access the class attribute
+        for rule in self.hard_rules:
+            if not rule.satisfied(user):
+                return False
+        return True
 
-    def soft_rules_satisfied(user : User) -> bool:
-        # TODO: Implement some sort of rule checking
-        return true
+    def soft_rules_satisfied(self, user: User) -> bool:
+        # TODO: Implement scoring logic for soft rules
+        return True
 
-    def satisfied(user : User):
-        return hard_rules_satisfied(user) and soft_rules_satisfied(user)
+    def satisfied(self, user: User) -> bool:
+        # Note: Use 'self' to call sibling methods
+        return self.hard_rules_satisfied(user) and self.soft_rules_satisfied(user)

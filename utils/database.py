@@ -1,6 +1,10 @@
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
+from utils.logs import *
+from typing import Dict, Any, List
+
+from core.loan_scheme import LoanScheme
 
 load_dotenv()
 
@@ -41,17 +45,44 @@ class Database:
     @property
     def client(self):
         return self._client
+
+    def insert_into_collection(self, collection_name : str, data: Dict[str, Any]):
+        try:
+            collection = self._db[collection_name]
+            result = collection.insert_one(data)
+            return result.inserted_id
+        except:
+            log_error(f"Couldn't insert data into collection {collection_name}!")
+            return None
+
+    def fetch_all_from_collection(self, collection_name : str) -> List[Dict[str, Any]]:
+        try:
+            collection = self._db[collection_name]
+
+            # .find({}) retrieves all documents; we cast the cursor to a list
+            schemes = list(collection.find({}))
+            
+            return schemes
+        except:
+            log_error(f"Couldn't retrieve data from collection {collection_name}!")
+            return None
+    
+    def insert_loan_scheme(self, loan_scheme : LoanScheme):
+        dump = loan_scheme.model_dump()
+        self.insert_into_collection("loan_schemes", dump)
+        
+    def fetch_all_loan_schemes(self):
+        d_list = self.fetch_all_from_collection("loan_schemes")
+        loan_schemes = []
+        for d in d_list:
+            loan_scheme = LoanScheme(**d)
+            loan_schemes.append(loan_scheme)
+        return loan_schemes
     
 db = Database()
 
 def get_db():
     return db.db
 
-def insert_into_collection(collection_name : str, data: Dict[str, Any]):
-    try:
-        collection = db[collection_name]
-        result = collection.insert_one(data)
-        print(f"Successfully inserted document with ID: {result.inserted_id}")
-        return result.inserted_id
-    except:
-        return None
+def get_db_wrapper():
+    return db

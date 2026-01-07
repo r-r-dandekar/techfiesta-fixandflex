@@ -11,3 +11,6 @@ class DefaultHistory(HardRule):
         
         # Returns True only if both are False
         return (not has_default) and (not has_bankruptcy)
+
+    def __init__(self, rule_id: str):
+        super().__init__(rule_id, "default_history")

@@ -1,21 +1,15 @@
 from core.user import User
+from pydantic import BaseModel
+from typing import Any
 
-class Rule:
-    ruleID : str
-    ruleType : str
-
-    def __init__(self, ruleID: str, ruleType: str):
-        self.ruleID = ruleID
-        self.ruleType = ruleType
+class Rule(BaseModel):
+    rule_id: str
+    rule_type: str
 
 class HardRule(Rule):
-
-    def satisfied(self, user: User) -> bool:
+    def satisfied(self, user: Any) -> bool:
         pass
-
-    def __init__(self, ruleID: str, ruleType: str):
-        super().__init__(ruleID, ruleType)
-
+        
 class SoftRule(Rule):
 
     def rate_impact(self, user: User) -> float:
@@ -23,6 +17,3 @@ class SoftRule(Rule):
 
     def tenure_impact(self, user: User) -> float:
         pass
-        
-    def __init__(self, ruleID: str, ruleType: str):
-        super().__init__(ruleID, ruleType)
