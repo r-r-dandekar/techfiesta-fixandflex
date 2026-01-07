@@ -8,6 +8,8 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
+loan_schemes = []
+
 @app.route("/")
 def home():
     return jsonify({
