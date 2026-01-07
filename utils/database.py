@@ -46,3 +46,12 @@ db = Database()
 
 def get_db():
     return db.db
+
+def insert_into_collection(collection_name : str, data: Dict[str, Any]):
+    try:
+        collection = db[collection_name]
+        result = collection.insert_one(data)
+        print(f"Successfully inserted document with ID: {result.inserted_id}")
+        return result.inserted_id
+    except:
+        return None
