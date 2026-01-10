@@ -72,13 +72,28 @@ class Database:
         self.insert_into_collection("loan_schemes", dump)
         
     def fetch_all_loan_schemes(self):
-        d_list = self.fetch_all_from_collection("loan_schemes")
+        d_list = self.fetch_all_from_collection("sample_loan_schemas")
         loan_schemes = []
         for d in d_list:
             loan_scheme = LoanScheme(**d)
             loan_schemes.append(loan_scheme)
         return loan_schemes
-    
+
+    def fetch_loan_schemes_by_type(self, loan_type: str) -> List[Dict[str, Any]]:
+        try:
+            collection = self._db["sample_loan_schemas"]
+
+            products = list(collection.find({
+                "product_info.product_type": loan_type,
+                "product_info.is_active": True
+            }))
+
+            return products
+        except Exception as e:
+            log_error(f"Failed to fetch loan schemes for type {loan_type}: {e}")
+            return []
+
+
 db = Database()
 
 def get_db():

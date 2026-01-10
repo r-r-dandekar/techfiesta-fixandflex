@@ -190,3 +190,6 @@ class User:
         "calculator_used": True
     }
 }
+
+
+
